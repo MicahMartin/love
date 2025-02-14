@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const app = express();
-const port = 3000; // Setting the port to 3000
+const port = 80; // Setting the port to 3000
 
 // Use fileURLToPath to get the directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
