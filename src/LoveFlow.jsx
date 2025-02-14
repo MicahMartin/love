@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import { useSpring, animated } from "@react-spring/web";
 
 const loveNotes = [
   { image: "/babygirl_01.png", text: "I love the way you brighten up my days, u have an angels energy and you know it. U know how to make me laugh and put me at peace" },
@@ -16,22 +17,44 @@ const loveNotes = [
 ];
 
 function LovePage({ image, text, onNext, index }) {
+  // Adjusting transition speed and smoothness by tweaking tension and friction
+  const fadeIn = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    reset: true, // Reset the animation every time the component is updated
+    config: { tension: 35, friction: 70 }, // Lower tension for slower and smoother transitions
+    duration: 3000, // Make the transition last 1 second (1000ms)
+  });
+
   return (
     <Box sx={{ height: "100vh", textAlign: "center", maxWidth: "600px", margin: "0 auto" }}>
-      <img src={image} alt={text} style={{ maxHeight: "70vh", width: "100%", maxWidth: "400px", borderRadius: "10px" }} />
-      <Typography
-        variant="h5"
-        sx={{
-          marginTop: "20px",
-          fontFamily: "'Poppins', sans-serif",
-          fontWeight: "400",
-          lineHeight: 1.6,
-          fontSize: "1.25rem",
-          color: "#333"
+      <animated.img
+        src={image}
+        alt={text}
+        style={{
+          maxHeight: "70vh",
+          width: "100%",
+          maxWidth: "400px",
+          borderRadius: "10px",
+          ...fadeIn, // Apply fade effect to the image
         }}
-      >
-        {text}
-      </Typography>
+      />
+      <animated.div style={fadeIn}>
+        <Typography
+          variant="h5"
+          sx={{
+            marginTop: "20px",
+            fontFamily: "'Poppins', sans-serif",
+            fontWeight: "400",
+            lineHeight: 1.6,
+            fontSize: "1.25rem",
+            color: "#333",
+          }}
+        >
+          {text}
+        </Typography>
+      </animated.div>
+
       {index < loveNotes.length - 1 && (
         <Button variant="contained" color="primary" onClick={onNext} sx={{ marginTop: "20px" }}>
           Next
