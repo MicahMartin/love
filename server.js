@@ -34,9 +34,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Example route
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+// Serve static files from the React app's build directory
+const buildDirectory = path.join(__dirname, 'dist');
+app.use(express.static(buildDirectory));
+
+// All other routes should serve the index.html (this is for React Router)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(buildDirectory, 'index.html'));
 });
 
 app.listen(port, () => {
