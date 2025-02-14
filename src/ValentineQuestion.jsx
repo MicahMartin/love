@@ -5,6 +5,8 @@ const containerSx = {
   backgroundColor: "#ffebee", // Light pink background
   padding: "40px",
   borderRadius: "10px",
+  marginLeft: "10px",
+  marginRight: "10px",
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
   textAlign: "center",
 }
