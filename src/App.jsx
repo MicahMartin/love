@@ -10,6 +10,8 @@ const rootSx = {
   justifyContent: "center",
   alignItems: "center",
   minHeight: "100vh",
+  marginLeft: { xs: 2, sm: 4, md: 6 }, // Adjust values as needed
+  marginRight: { xs: 2, sm: 4, md: 6 },
 };
 
 const containerSx = {
