@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const app = express();
-const port = 80; // Setting the port to 3000
+const port = 80; // You may adjust to 3000 or your preferred port
 
 // Use fileURLToPath to get the directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -15,7 +15,17 @@ const logFilePath = path.join(__dirname, 'access.log');
 
 // Middleware to log IP, URL, and User-Agent
 app.use((req, res, next) => {
-  const ip = req.ip || req.connection.remoteAddress;
+  // Retrieve the IP address from the request
+  let ip = req.ip || req.connection.remoteAddress;
+
+  // Check if the IP is IPv6-mapped and strip out the "::ffff:" part to get the IPv4 address
+  if (ip.includes('::ffff:')) {
+    ip = ip.split('::ffff:')[1]; // Extract the IPv4 address from an IPv6-mapped address
+  } else if (ip.startsWith('::')) {
+    // Handle pure IPv6 addresses if needed
+    ip = 'IPv6';
+  }
+
   const url = req.originalUrl;
   const userAgent = req.get('User-Agent');
 
@@ -43,6 +53,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(buildDirectory, 'index.html'));
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
