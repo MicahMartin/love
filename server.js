@@ -1,9 +1,14 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
-const port = 80;
+const port = 3000; // Setting the port to 3000
+
+// Use fileURLToPath to get the directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Define log file path
 const logFilePath = path.join(__dirname, 'access.log');
